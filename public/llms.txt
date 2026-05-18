@@ -1,0 +1,103 @@
+# Manu pop — Generative Engine Optimization Map
+
+> Manu pop is a cute and playful online store specializing in fidget toys and Sonny Angels collectibles. The brand has a fun, youthful, and pastel-friendly vibe with a focus on trendy collectible toys. The store features three main categories: fidget toys, Sonny Angels, and a deals/discounts section. The shopping experience is designed to be clean, simple, and accessible with a shopping cart feature.
+
+---
+
+## Pages
+
+### בית
+https://example.com
+ברוכים הבאים למאנו פופ – החנות הכי שווה ✨ לצעצועי פידג&#39;ט וסוני אנג&#39;לס! עיצוב פסטלי, מוצרים טרנדיים וחווית קנייה פשוטה ומהנה. הזמינו עכשיו!
+
+### צעצועי פידג'ט
+https://example.com/fidget-toys
+גלו את קולקציית צעצועי הפידג&#39;ט הכי מגניבה ברשת! כל לחיצה, סיבוב ומתיחה בדיוק בשבילכם. מוצרים טרנדיים במחירים שווים – כי מאנו פופ היא החנות הכי שווה ✨
+
+### סוני אנג'לס
+https://example.com/sonny-angels
+קולקציית סוני אנג&#39;לס המלאה נמצאת כאן! בובות אספנות מתוקות ומיוחדות שכל אחת שונה מהשנייה. מצאו את הדמות שחיכיתם לה – רק במאנו פופ, החנות הכי שווה ✨
+
+### מבצעים
+https://example.com/deals
+הנחות, דילים ומבצעים בלעדיים על פידג&#39;ט וסוני אנג&#39;לס – כי מאנו פופ היא החנות הכי שווה ✨ ולא מפסיקים להפתיע! בדקו את המבצעים לפני שייגמר הכל. מהרו!
+
+### Cart
+https://example.com/cart
+עגלת הקניות שלך
+
+### Products
+https://example.com/products
+המוצרים שלנו - Manu pop
+
+### Checkout
+https://example.com/checkout
+תשלום
+
+### Login
+https://example.com/login
+התחברות לקוחות
+
+### Account
+https://example.com/account
+החשבון שלי
+
+### Order Success
+https://example.com/order-success
+תודה על ההזמנה
+
+### Product Detail
+https://example.com/product/:slug
+פרטי המוצר - Manu pop
+
+### Category
+https://example.com/category/:slug
+מוצרים - Manu pop
+
+## Legal & Policy
+
+### Privacy Policy
+https://example.com/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://example.com/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://example.com/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+## Products
+
+_No products are currently configured._
+
+---
+
+# Business Context (for LLM understanding)
+
+## About Manu pop
+Manu pop is a cute and playful online store specializing in fidget toys and Sonny Angels collectibles. The brand has a fun, youthful, and pastel-friendly vibe with a focus on trendy collectible toys. The store features three main categories: fidget toys, Sonny Angels, and a deals/discounts section. The shopping experience is designed to be clean, simple, and accessible with a shopping cart feature.
+
+## Services/Products
+- פיג׳יטויז 🧊
+- סוני אנג׳לס 👼
+- הנחות ✨
+
+## Target Audience
+- אתר זה פונה לכולם🩷
+
+## Industry
+E-commerce
+
+---
+
+# Machine-readable feeds
+
+- Sitemap (XML): https://example.com/sitemap.xml
+- Robots: https://example.com/robots.txt
+- Flattened page text (for LLMs): https://example.com/llms-full.txt
+- Products (JSON): https://example.com/products.json
+- Products (Google Merchant RSS): https://example.com/product-feed.xml

@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>מבצעים שאי אפשר לפספס אפילו שנייה — Manu pop</title>
+    <meta name="description" content="הנחות, דילים ומבצעים בלעדיים על פידג&#39;ט וסוני אנג&#39;לס – כי מאנו פופ היא החנות הכי שווה ✨ ולא מפסיקים להפתיע! בדקו את המבצעים לפני שייגמר הכל. מהרו!">
+    <meta name="keywords" content="מבצעים צעצועים, הנחות פידג'ט, סוני אנג'לס במחיר מיוחד, החנות הכי שווה ✨, דילים חמים אונליין">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: 'd7c7281f-dc3f-4ea8-8486-1a3bddb9d66a',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="מבצעים שאי אפשר לפספס אפילו שנייה — Manu pop">
+    <meta property="og:description" content="הנחות, דילים ומבצעים בלעדיים על פידג&#39;ט וסוני אנג&#39;לס – כי מאנו פופ היא החנות הכי שווה ✨ ולא מפסיקים להפתיע! בדקו את המבצעים לפני שייגמר הכל. מהרו!">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="מבצעים שאי אפשר לפספס אפילו שנייה — Manu pop">
+    <meta name="twitter:description" content="הנחות, דילים ומבצעים בלעדיים על פידג&#39;ט וסוני אנג&#39;לס – כי מאנו פופ היא החנות הכי שווה ✨ ולא מפסיקים להפתיע! בדקו את המבצעים לפני שייגמר הכל. מהרו!">
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .skip-link { position: absolute; top: 0; left: 0; transform: translateY(-200%); padding: 12px 18px; background: var(--bg-dark, #1a1a1a); color: var(--text-light, #fff); font-weight: 600; border-radius: 0 0 8px 0; z-index: 10000; }
+    .skip-link:focus { transform: none; outline: 2px solid var(--ring, #fff); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--ring, currentColor); outline-offset: 3px; }
+  </style>
+
+
+  
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      html[dir="rtl"] .whatsapp-float { right: 20px !important; left: auto !important; }
+      html[dir="ltr"] .whatsapp-float, html:not([dir]) .whatsapp-float { left: 20px !important; right: auto !important; }
+      html[dir="rtl"] #mic-access-tool-general-button, html[dir="rtl"] .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="rtl"] ._access-icon { left: 20px !important; right: auto !important; }
+      html[dir="ltr"] #mic-access-tool-general-button, html[dir="ltr"] .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="ltr"] ._access-icon,
+      html:not([dir]) #mic-access-tool-general-button, html:not([dir]) .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool #mic-access-tool-general-button,
+      html:not([dir]) ._access-icon { right: 20px !important; left: auto !important; }
+      @media (max-width: 768px) { .whatsapp-float { display: flex !important; } }
+      @media (min-width: 769px) { .whatsapp-float { display: flex !important; } }
+      @media (max-width: 768px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+      @media (min-width: 769px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+    </style>
+</head>
+<body>
+
+
+    <div class="mobile-search-panel" id="mobile-search-panel">
+      <div class="search-wrapper">
+        <input type="text" id="mobile-search-input" placeholder="חיפוש מוצרים..." autocomplete="off">
+        <button class="search-submit" id="mobile-search-submit" title="חיפוש">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+        </button>
+        <button class="close-search" id="close-mobile-search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="search-results" id="mobile-search-results"></div>
+    </div>
+  
+<script>window.ZAPPY_WEBSITE_ID = "d7c7281f-dc3f-4ea8-8486-1a3bddb9d66a";window.ZAPPY_API_BASE = "https://api.zappy5.com";</script><a class="skip-link" href="#main">דלג לתוכן הראשי</a>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-right-group"><div class="nav-brand">
+      <a href="/" class="logo-link"><img class="logo" src="/assets/site--------image-1.webp" alt="Manu pop"></a>
+    </div><ul class="nav-menu" id="navMenu">
+
+    <li class="menu-item-has-children zappy-products-dropdown">
+      <a href="/products">
+        מוצרים
+        <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9l6 6 6-6"></path>
+        </svg>
+      </a>
+      <ul class="sub-menu" id="zappy-nav-category-links">
+        <li><a href="/products">כל המוצרים</a></li>
+        <!-- Categories will be loaded dynamically -->
+      </ul>
+    </li>
+  <li><a href="/">בית</a></li><li><a href="/fidget-toys">צעצועי פידג'ט</a></li><li><a href="/sonny-angels">סוני אנג'לס</a></li><li><a href="/deals">מבצעים</a></li><li><a href="/cart">עגלה</a></li><li><a href="/contact">צור קשר</a></li></ul><div class="nav-ecommerce-icons nav-icons-left"><a href="/login" class="login-link nav-login" title="התחברות"><svg class="login-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a><a href="#cart" class="cart-link nav-cart" id="cart-drawer-toggle" title="עגלת קניות"><svg class="cart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="cart-count">0</span></a><div class="nav-search-box">
+    <input type="text" class="nav-search-input" id="nav-search-input" placeholder="חיפוש מוצרים..." autocomplete="off">
+    <button class="nav-search-btn" id="nav-search-btn" title="חיפוש">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+    </button>
+    <div class="nav-search-results" id="nav-search-results"></div>
+  </div></div><div class="nav-ecommerce-icons nav-icons-right"><button class="nav-search-toggle" id="mobile-search-toggle" title="חיפוש"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg></button></div></div>
+
+    
+
+    
+  </div>
+</nav>
+
+    <nav class="zappy-catalog-menu rtl" id="zappy-catalog-menu" dir="rtl" style="display:none">
+      <div class="catalog-menu-container">
+        <a href="/products" class="catalog-menu-item catalog-menu-all">כל המוצרים</a>
+        <div class="catalog-menu-categories" id="zappy-category-links">
+          <!-- Categories will be loaded dynamically -->
+        </div>
+      </div>
+    </nav>
+  
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .navbar,
+          nav.navbar {
+            min-height: 70px !important;
+          }
+
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            transform: none !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-dark)) !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+          }
+
+          html[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          body[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] header .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] nav .phone-header-btn {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '0', 'important');
+          mobileToggle.style.setProperty('bottom', '0', 'important');
+          mobileToggle.style.setProperty('margin-top', 'auto', 'important');
+          mobileToggle.style.setProperty('margin-bottom', 'auto', 'important');
+          mobileToggle.style.setProperty('transform', 'none', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '0', 'important');
+          phoneBtn.style.setProperty('bottom', '0', 'important');
+          phoneBtn.style.setProperty('margin-top', 'auto', 'important');
+          phoneBtn.style.setProperty('margin-bottom', 'auto', 'important');
+          phoneBtn.style.setProperty('transform', 'none', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu handler (shared by click and touchend)
+    function handleToggle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+      const closeIcon = newToggle.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    }
+    
+    // Use click for desktop/emulation and touchend as iOS Safari fallback.
+    // Prevent double-fire with a timestamp guard.
+    var lastToggleTime = 0;
+    function guardedToggle(e) {
+      var now = Date.now();
+      if (now - lastToggleTime < 300) return;
+      lastToggleTime = now;
+      handleToggle(e);
+    }
+    
+    newToggle.addEventListener('click', guardedToggle);
+    newToggle.addEventListener('touchend', guardedToggle);
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // WhatsApp button visibility is now controlled via CSS (siteSettings).
+    // No JS-based desktop hiding — the button is visible on both mobile and desktop by default.
+  });
+})();
+
+</script>
+  
+  <main id="main">
+    <section class="deals-promo-section" data-layout-spec="מבצעים-promo" dir="rtl">
+  <!-- Decorative sparkle stars -->
+  <span class="deals-star deals-star-1" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 1L12.8 8.2L20 11L12.8 13.8L11 21L9.2 13.8L2 11L9.2 8.2L11 1Z" fill="#FFB38A" opacity="0.75"></path></svg>
+  </span>
+  <span class="deals-star deals-star-2" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1L8.1 5.4L12.5 7L8.1 8.6L7 13L5.9 8.6L1.5 7L5.9 5.4L7 1Z" fill="#CDBDFF" opacity="0.85"></path></svg>
+  </span>
+  <span class="deals-star deals-star-3" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 1L10.6 6.8L16.5 9L10.6 11.2L9 17L7.4 11.2L1.5 9L7.4 6.8L9 1Z" fill="#FFC7E6" opacity="0.7"></path></svg>
+  </span>
+  <span class="deals-star deals-star-4" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1L7 4.8L11 6L7 7.2L6 11L5 7.2L1 6L5 4.8L6 1Z" fill="#FFB38A" opacity="0.6"></path></svg>
+  </span>
+
+  <div class="deals-promo-container">
+    <!-- Main row: text on right, image on left -->
+    <div class="deals-promo-main-row">
+      <!-- Text column (START = right in RTL) -->
+      <div class="deals-promo-text-col">
+        <div class="deals-promo-eyebrow">
+          <span class="deals-eyebrow-badge">✨ החנות הכי שווה</span>
+        </div>
+        <h1 class="deals-promo-h1">המבצעים<br>שלנו 🏷️</h1>
+        <p class="deals-promo-desc">גילויים מיוחדים, מחירים שמחים ובחירות שאנחנו אוהבים — כל מה שצריך כדי למצוא את הפינוק הבא שלך במחיר שיגרום לך לחייך.</p>
+        <div class="deals-promo-cta-row">
+          <a href="/deals" class="btn-primary deals-cta-btn">לכל המבצעים <i class="fa-solid fa-arrow-left"></i></a>
+          <a href="/products" class="btn-secondary deals-cta-secondary">לכל המוצרים</a>
+        </div>
+        <!-- Decorative percent tag -->
+        <div class="deals-percent-tag" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="12" width="72" height="56" rx="16" fill="#FFB38A"></rect>
+            <rect x="4" y="12" width="72" height="56" rx="16" fill="url(#ptag-grad)"></rect>
+            <defs><linearGradient id="ptag-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFB38A"></stop><stop offset="100%" stop-color="#FFC7E6"></stop></linearGradient></defs>
+            <text x="40" y="50" text-anchor="middle" font-size="26" font-weight="800" font-family="Baloo 2, Nunito, sans-serif" fill="#fff" dominant-baseline="middle">%</text>
+            <circle cx="16" cy="40" r="5" fill="white" opacity="0.5"></circle>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Image column (END = left in RTL) -->
+      <div class="deals-promo-image-col">
+        <div class="deals-promo-image-frame">
+          <img loading="eager" fetchpriority="high" data-placeholder="deals-promo-image-1" data-context="A playful, colorful flat lay of cute fidget toys and Sonny Angels collectible figurines arranged on a soft pastel peach background with confetti, price tags, and sparkle decorations. The mood is joyful, youthful, and boutique-like with a pastel pink and peach color palette." width="600" height="420" src="/assets/site-deals-promo-image-1.webp" alt="מבצעים מיוחדים על צעצועי פידג׳ט וסוני אנג׳לס" class="deals-promo-img">
+          <!-- Frame badge -->
+          <div class="deals-frame-badge">🔥 מחירים מיוחדים</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pill note card -->
+    <div class="deals-pill-note-wrap">
+      <div class="deals-pill-note-card">
+        <span class="deals-pill-icon">⏰</span>
+        <span class="deals-pill-text">המבצעים מוגבלים בזמן — אל תפספסו את ההזדמנות לקחת את האהובים שלכם במחיר מיוחד!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom diagonal divider transitioning to peach/highlights section -->
+  <div class="deals-promo-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,72 L0,28 L1200,0 L1200,72 Z" fill="#FFFDFC"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="deals-highlights-section" data-layout-spec="מבצעים-highlights" dir="rtl">
+  <div class="deals-highlights-container">
+    <div class="deals-highlights-header">
+      <h2 class="deals-highlights-title">המבצעים הכי שווים ✨</h2>
+      <p class="deals-highlights-subtitle">בחרנו בשבילכם את הדילים הכי מיוחדים שיש</p>
+    </div>
+
+    <div class="deals-highlights-grid">
+
+      <!-- Card 1: Special Picks -->
+      <article class="deals-card">
+        <div class="deals-card-image-wrap">
+          <img loading="lazy" decoding="async" data-placeholder="deals-highlights-image-1" data-context="A flat-lay arrangement of colorful, pastel-toned fidget toy picks including pop-its, spinners, and sensory cubes on a soft blush-pink background, styled like a boutique product editorial for a cute Israeli toy store" width="600" height="400" src="/assets/site-deals-highlights-image-1.webp" alt="מבחר פיג׳יטויז מיוחדים">
+          <span class="deals-card-badge">בחירות מיוחדות</span>
+        </div>
+        <div class="deals-card-body">
+          <h3 class="deals-card-title">הפיקים שלנו 🧊</h3>
+          <p class="deals-card-desc">פיג׳יטויז נבחרים שאנחנו הכי אוהבים – מגוון צבעים, מרקמים ורגשות. מושלמים לכל גיל.</p>
+          <div class="deals-card-savings">
+            <svg data-no-icon-edit="true" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L9.8 5.6L15 6.2L11.2 9.8L12.4 15L8 12.4L3.6 15L4.8 9.8L1 6.2L6.2 5.6L8 1Z" fill="#FFB38A"></path></svg>
+            <span>חיסכון של עד 30% על מוצרים נבחרים</span>
+          </div>
+          <a href="/deals" class="deals-card-cta">לקנות עכשיו</a>
+        </div>
+      </article>
+
+      <!-- Card 2: Cute Bundles -->
+      <article class="deals-card deals-card--accent">
+        <div class="deals-card-image-wrap">
+          <img loading="lazy" decoding="async" data-placeholder="deals-highlights-image-2" data-context="A charming bundle of Sonny Angels figurines in pastel packaging arranged together with ribbon and tissue paper in soft lilac and pink tones, styled as a gift bundle product photo for a cute collectible toy boutique" width="600" height="400" src="/assets/site-deals-highlights-image-2.webp" alt="חבילות סוני אנג׳לס מתנה">
+          <span class="deals-card-badge deals-card-badge--lilac">חבילות מתנה</span>
+        </div>
+        <div class="deals-card-body">
+          <h3 class="deals-card-title">חבילות מתנה 👼</h3>
+          <p class="deals-card-desc">סוני אנג׳לס בחבילות שכולן אהבה – מושלמות למתנה, לאוסף, או סתם כי מגיע לך.</p>
+          <div class="deals-card-savings">
+            <svg data-no-icon-edit="true" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L9.8 5.6L15 6.2L11.2 9.8L12.4 15L8 12.4L3.6 15L4.8 9.8L1 6.2L6.2 5.6L8 1Z" fill="#CDBDFF"></path></svg>
+            <span>חבילת 3 ב-מחיר מיוחד</span>
+          </div>
+          <a href="/deals" class="deals-card-cta deals-card-cta--lilac">לקנות עכשיו</a>
+        </div>
+      </article>
+
+      <!-- Card 3: Seasonal Offers -->
+      <article class="deals-card deals-card--warm">
+        <div class="deals-card-image-wrap">
+          <img loading="lazy" decoding="async" data-placeholder="deals-highlights-image-3" data-context="A playful flat-lay of discounted fidget toys and Sonny Angels collectibles with colorful sale tags and confetti on a warm peach and blush background, evoking a festive seasonal sale for a cute Israeli online toy store" width="600" height="400" src="/assets/site-deals-highlights-image-3.webp" alt="מבצעים עונתיים ב-Manu pop">
+          <span class="deals-card-badge deals-card-badge--coral">מבצע עונתי</span>
+        </div>
+        <div class="deals-card-body">
+          <h3 class="deals-card-title">מבצעי העונה ✨</h3>
+          <p class="deals-card-desc">הנחות שרק מגיעות ועוזבות – תפסו את ההזדמנות לפני שייגמר! החנות הכי שווה ✨</p>
+          <div class="deals-card-savings">
+            <svg data-no-icon-edit="true" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L9.8 5.6L15 6.2L11.2 9.8L12.4 15L8 12.4L3.6 15L4.8 9.8L1 6.2L6.2 5.6L8 1Z" fill="#FFB38A"></path></svg>
+            <span>עד 50% הנחה – לזמן מוגבל!</span>
+          </div>
+          <a href="/deals" class="deals-card-cta deals-card-cta--coral">לקנות עכשיו</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Bottom torn-paper divider -->
+  <div class="deals-highlights-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,38 Q30,32 60,40 T120,34 Q155,40 190,32 T260,38 Q295,30 330,36 T400,32 Q435,38 470,30 T540,36 Q575,30 610,38 T680,32 Q715,40 750,32 T820,38 Q855,30 890,36 T960,30 Q995,38 1030,32 T1100,38 Q1135,30 1170,36 T1200,32 L1200,80 Z" fill="#FFF0F5"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="deals-perks-section" data-layout-spec="מבצעים-perks" dir="rtl">
+  <!-- Decorative hearts -->
+  <span class="deals-perks-heart deals-perks-heart--1" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 24s-11-6.5-11-13a6 6 0 0 1 11-3.35A6 6 0 0 1 25 11c0 6.5-11 13-11 13z" fill="#FFC7E6" opacity="0.7"></path></svg>
+  </span>
+  <span class="deals-perks-heart deals-perks-heart--2" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 24s-11-6.5-11-13a6 6 0 0 1 11-3.35A6 6 0 0 1 25 11c0 6.5-11 13-11 13z" fill="#CDBDFF" opacity="0.6"></path></svg>
+  </span>
+  <span class="deals-perks-star" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" fill="#FFB38A" opacity="0.65"></path></svg>
+  </span>
+
+  <div class="deals-perks-container">
+    <!-- Intro block -->
+    <div class="deals-perks-intro">
+      <h2 class="deals-perks-title">למה כדאי לקנות אצלנו? ✨</h2>
+      <p class="deals-perks-subtitle">החנות הכי שווה ✨ — כאן תמצאו מבצעים אמיתיים, מוצרים מדליקים ושירות שמח שיגרום לכם לחייך</p>
+    </div>
+
+    <!-- 2x2 Grid -->
+    <div class="deals-perks-grid">
+
+      <!-- Card 1 -->
+      <article class="deals-perks-card deals-perks-card--blush">
+        <div class="deals-perks-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="18" cy="18" r="18" fill="#FFC7E6" opacity="0.3"></circle>
+            <path d="M10 13h16M10 18h10M10 23h13" stroke="#F06292" stroke-width="2.2" stroke-linecap="round"></path>
+            <path d="M26 20l2 2-4 4" stroke="#F06292" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <div class="deals-perks-card-content">
+          <h3 class="deals-perks-card-title">מבצעים מוגבלים בזמן</h3>
+          <p class="deals-perks-card-text">הנחות אמיתיות על פיג׳יטויז וסוני אנג׳לס — לזמן מוגבל בלבד. כדאי לתפוס לפני שנגמר!</p>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="deals-perks-card deals-perks-card--lilac">
+        <div class="deals-perks-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="18" cy="18" r="18" fill="#CDBDFF" opacity="0.3"></circle>
+            <path d="M18 10s-6 3-6 8a6 6 0 0 0 12 0c0-5-6-8-6-8z" stroke="#7C5CBF" stroke-width="2" stroke-linejoin="round" fill="none"></path>
+            <path d="M14 21c1.5 1.5 4.5 1.5 6 0" stroke="#7C5CBF" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <div class="deals-perks-card-content">
+          <h3 class="deals-perks-card-title">מתנות מושלמות לכל גיל</h3>
+          <p class="deals-perks-card-text">מחפשים מתנה שתגרום לחיוך? הקולקציות שלנו מושלמות לימי הולדת, חגים ורגעים מיוחדים.</p>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="deals-perks-card deals-perks-card--peach">
+        <div class="deals-perks-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="18" cy="18" r="18" fill="#FFB38A" opacity="0.25"></circle>
+            <rect x="10" y="12" width="16" height="14" rx="3" stroke="#D4622A" stroke-width="2" fill="none"></rect>
+            <path d="M14 12v-2a4 4 0 0 1 8 0v2" stroke="#D4622A" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M15 19h6M18 16v6" stroke="#D4622A" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <div class="deals-perks-card-content">
+          <h3 class="deals-perks-card-title">גלישה נוחה ופשוטה</h3>
+          <p class="deals-perks-card-text">שלוש קטגוריות ברורות, עגלת קניות נוחה ותהליך רכישה מהיר — כי הזמן שלכם יקר.</p>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="deals-perks-card deals-perks-card--mint">
+        <div class="deals-perks-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="18" cy="18" r="18" fill="#CDBDFF" opacity="0.2"></circle>
+            <circle cx="18" cy="18" r="6" stroke="#7C5CBF" stroke-width="2" fill="none"></circle>
+            <path d="M18 10V8M18 28v-2M10 18H8M28 18h-2" stroke="#7C5CBF" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M15 18l2 2 4-4" stroke="#F06292" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <div class="deals-perks-card-content">
+          <h3 class="deals-perks-card-title">מציאות שקל לגלות</h3>
+          <p class="deals-perks-card-text">סעיף המבצעים שלנו מרוכז ומסודר — כל ההנחות במקום אחד, בלי לחפש, בלי לפספס.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Bottom cloud divider transitioning to pale lilac FAQ section -->
+  <div class="deals-perks-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,52 Q60,38 120,50 Q180,62 240,44 Q300,28 360,46 Q420,60 480,40 Q540,22 600,42 Q660,58 720,38 Q780,20 840,44 Q900,62 960,46 Q1020,30 1080,50 Q1140,66 1200,48 L1200,90 Z" fill="#FCF0F5"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="deals-faq-section" data-layout-spec="מבצעים-faq" dir="rtl">
+  <div class="deals-faq-container">
+    <div class="deals-faq-header">
+      <span class="deals-faq-badge">שאלות נפוצות ✨</span>
+      <h2 class="deals-faq-title">כל מה שרצית לדעת</h2>
+      <p class="deals-faq-subtitle">יש לך שאלה? סביר להניח שכבר ענינו עליה כאן 🩷</p>
+    </div>
+
+    <div class="deals-faq-list">
+
+      <article class="deals-faq-item">
+        <div class="deals-faq-number" aria-hidden="true">01</div>
+        <div class="deals-faq-content">
+          <h3 class="deals-faq-question">מתי מתחדשות המבצעים בחנות?</h3>
+          <p class="deals-faq-answer">המבצעים שלנו מתחדשים בכל שבוע — בדרך כלל בתחילת השבוע. כדי לא לפספס אף עסקה, מומלץ לעקוב אחרינו ולבדוק את עמוד ההנחות באופן קבוע. לפעמים מגיעות הפתעות גם באמצע השבוע! 🎉</p>
+        </div>
+      </article>
+
+      <div class="deals-faq-separator" aria-hidden="true"></div>
+
+      <article class="deals-faq-item">
+        <div class="deals-faq-number" aria-hidden="true">02</div>
+        <div class="deals-faq-content">
+          <h3 class="deals-faq-question">האם המוצרים במבצע זמינים במלאי?</h3>
+          <p class="deals-faq-answer">המוצרים שמופיעים בעמוד ההנחות זמינים במלאי בזמן הפרסום. עם זאת, מדובר בכמויות מוגבלות — אז אם ראית משהו שאהבת, כדאי לא לחכות יותר מדי. מוצרים שאזלו יסומנו בהתאם.</p>
+        </div>
+      </article>
+
+      <div class="deals-faq-separator" aria-hidden="true"></div>
+
+      <article class="deals-faq-item">
+        <div class="deals-faq-number" aria-hidden="true">03</div>
+        <div class="deals-faq-content">
+          <h3 class="deals-faq-question">אפשר להזמין מוצרים כמתנה?</h3>
+          <p class="deals-faq-answer">בהחלט! הצעצועים שלנו הם מתנה מושלמת לכל גיל 🎁 אם תרצי שנארוז את ההזמנה בצורה מיוחדת לאירוע, פשוט ציינו זאת בהערות ההזמנה ונשמח לעזור. אנחנו אוהבים לגרום לאנשים לחייך!</p>
+        </div>
+      </article>
+
+      <div class="deals-faq-separator" aria-hidden="true"></div>
+
+      <article class="deals-faq-item">
+        <div class="deals-faq-number" aria-hidden="true">04</div>
+        <div class="deals-faq-content">
+          <h3 class="deals-faq-question">איך יודעים אם מוצר נכנס לקטגוריית ההנחות?</h3>
+          <p class="deals-faq-answer">כל מוצר שנמצא במבצע יופיע אוטומטית בעמוד ההנחות שלנו ✨ — זה העמוד הכי שווה בחנות! תוכלו לראות שם את המחיר המקורי לצד המחיר המוזל, כדי שתדעו בדיוק כמה חסכתם.</p>
+        </div>
+      </article>
+
+      <div class="deals-faq-separator" aria-hidden="true"></div>
+
+      <article class="deals-faq-item">
+        <div class="deals-faq-number" aria-hidden="true">05</div>
+        <div class="deals-faq-content">
+          <h3 class="deals-faq-question">איך אפשר לפנות אליכם לשאלות נוספות?</h3>
+          <p class="deals-faq-answer">אנחנו כאן בשבילכם! 🩷 אפשר לכתוב לנו בכל שאלה, בקשה מיוחדת או סתם להגיד שלום. נחזור אליכם בהקדם האפשרי. אנחנו אוהבים לשמוע מהקהילה שלנו ותמיד שמחים לעזור.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Decorative heart accent -->
+    <svg class="deals-faq-deco-heart" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 60 54" fill="none" xmlns="http://www.w3.org/2000/svg" pointer-events="none">
+      <path d="M30 51s-26-16-26-31a14 14 0 0 1 26-7.2A14 14 0 0 1 56 20c0 15-26 31-26 31z" fill="#FFC7E6" opacity="0.45"></path>
+    </svg>
+
+    <svg class="deals-faq-deco-star" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" pointer-events="none">
+      <polygon points="20,2 24,15 38,15 27,23 31,37 20,29 9,37 13,23 2,15 16,15" fill="#CDBDFF" opacity="0.5"></polygon>
+    </svg>
+
+  </div>
+
+  <!-- Bottom curved divider transitioning to contact section (charcoal) -->
+  <div class="deals-faq-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,50 Q300,10 600,40 Q900,70 1200,30 L1200,80 Z" fill="#222222"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="deals-contact-section" data-layout-spec="מבצעים-contact" dir="rtl">
+  <!-- Decorative stars -->
+  <span class="deals-contact-star deals-contact-star--1" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="9,1 11.2,6.6 17.3,7 12.9,11 14.4,17 9,13.8 3.6,17 5.1,11 0.7,7 6.8,6.6" fill="#FFC7E6" opacity="0.55"></polygon></svg>
+  </span>
+  <span class="deals-contact-star deals-contact-star--2" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="12" height="12" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="9,1 11.2,6.6 17.3,7 12.9,11 14.4,17 9,13.8 3.6,17 5.1,11 0.7,7 6.8,6.6" fill="#CDBDFF" opacity="0.6"></polygon></svg>
+  </span>
+  <span class="deals-contact-star deals-contact-star--3" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="22" height="22" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="9,1 11.2,6.6 17.3,7 12.9,11 14.4,17 9,13.8 3.6,17 5.1,11 0.7,7 6.8,6.6" fill="#FFB38A" opacity="0.45"></polygon></svg>
+  </span>
+  <span class="deals-contact-star deals-contact-star--4" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="9,1 11.2,6.6 17.3,7 12.9,11 14.4,17 9,13.8 3.6,17 5.1,11 0.7,7 6.8,6.6" fill="#FFC7E6" opacity="0.5"></polygon></svg>
+  </span>
+
+  <div class="deals-contact-container">
+    <!-- Header -->
+    <div class="deals-contact-header">
+      <span class="deals-contact-badge">✨ דברו איתנו</span>
+      <h2 class="deals-contact-title">יש לכם שאלות על המבצעים?</h2>
+      <p class="deals-contact-subtitle">כתבו לנו ונשמח לעזור למצוא את העסקה הכי שווה בשבילכם 🩷<br>אנחנו כאן בשבילכם – שאלו על מבצעים, מלאי, והמלצות!</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="deals-contact-card">
+      <!-- Percent tag decoration -->
+      <span class="deals-contact-percent-tag" aria-hidden="true">
+        <svg data-no-icon-edit="true" aria-hidden="true" width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="48" height="48" rx="14" fill="#EF5350" opacity="0.92"></rect>
+          <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-size="22" font-weight="800" fill="#FFFFFF" font-family="Baloo 2, Nunito, sans-serif">%</text>
+        </svg>
+      </span>
+
+      <form class="contact-form deals-contact-form" novalidate="">
+        <div class="deals-contact-row">
+          <div class="deals-contact-field">
+            <label for="deals-contact-name">שם מלא</label>
+            <input type="text" id="deals-contact-name" name="name" placeholder="השם שלך" required="">
+          </div>
+          <div class="deals-contact-field">
+            <label for="deals-contact-email">אימייל</label>
+            <input type="email" id="deals-contact-email" name="email" placeholder="האימייל שלך" required="">
+          </div>
+        </div>
+        <div class="deals-contact-field">
+          <label for="deals-contact-phone">טלפון</label>
+          <input type="tel" id="deals-contact-phone" name="phone" placeholder="מספר הטלפון שלך">
+        </div>
+        <div class="deals-contact-field">
+          <label for="deals-contact-message">הודעה</label>
+          <textarea id="deals-contact-message" name="message" rows="4" placeholder="שאלו על מבצעים, מלאי, או כל דבר אחר..." required=""></textarea>
+        </div>
+
+        <div class="privacy-consent">
+          <label class="privacy-consent-label">
+            <input type="checkbox" name="privacy_consent" class="privacy-consent-checkbox" required="">
+            <span>קראתי ואני מסכים/ה ל<a href="/terms" target="_blank">תנאי השימוש</a><span class="separator">|</span>
+            <a href="/return-policy" aria-label="מדיניות החזרות">
+              מדיניות החזרות
+            </a> ול<a href="/privacy" target="_blank">מדיניות הפרטיות</a></span>
+          </label>
+        </div>
+
+        <button type="submit" class="deals-contact-submit btn-primary">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+          שלחו הודעה
+        </button>
+      </form>
+    </div>
+
+    <!-- Contact info strip -->
+    <div class="deals-contact-info-strip">
+      
+      
+      
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer" dir="rtl" aria-label="כותרת תחתונה של האתר">
+  <div class="footer-container">
+    <div class="footer-top">
+
+      <!-- Column 1: Company Info -->
+      <div class="footer-col footer-brand">
+        <img src="/assets/manu-pop-e-commerce-logo.webp" alt="Manu pop" class="logo">
+        <p class="footer-tagline">הבית של הקולקציות המיוחדות — צעצועי פידג'ט, סוני אנג'לס ועוד. עולם צבעוני ומלא קסם מחכה לך.</p>
+        <div class="footer-badges">
+          <span class="badge"><i class="fas fa-truck"></i> משלוח חינם מעל ₪199</span>
+          <span class="badge"><i class="fas fa-headset"></i> תמיכה 24/7</span>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <h3 class="footer-heading">ניווט מהיר</h3>
+        <ul class="footer-links">
+          <li><a href="/">בית</a></li>
+          <li><a href="/fidget-toys">צעצועי פידג'ט</a></li>
+          <li><a href="/sonny-angels">סוני אנג'לס</a></li>
+          <li><a href="/deals">מבצעים</a></li>
+          <li><a href="/cart">עגלה</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Contact -->
+      <div class="footer-col">
+        <h3 class="footer-heading">צור קשר</h3>
+        <ul class="footer-contact">
+          <li>
+            <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+            <span class="contact-text"><a href="mailto:[business_email]">[business_email]</a></span>
+          </li>
+          <li>
+            <span class="contact-icon"><i class="fas fa-phone"></i></span>
+            <span class="contact-text"><a href="tel:[business_phone]">[business_phone]</a></span>
+          </li>
+          <li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span class="contact-text">[business_address]</span></a></li>
+        </ul>
+        <div class="footer-hours">
+          <h4 class="hours-heading"><i class="fas fa-clock"></i> שעות פעילות</h4>
+          <p>ראשון–חמישי: 09:00–18:00</p>
+          <p>שישי: 09:00–13:00</p>
+          <p>שבת: סגור</p>
+        </div>
+      </div>
+
+      <!-- Column 4: Social -->
+      <div class="footer-col footer-social-col">
+        <h3 class="footer-heading">עקבו אחרינו</h3>
+        <p class="social-desc">הצטרפו לקהילה שלנו וקבלו השראה יומית</p>
+        <div class="footer-social">
+          
+          
+          
+        </div>
+        <div class="footer-newsletter">
+          <p class="newsletter-label">הצטרפו לניוזלטר</p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="האימייל שלך" aria-label="כתובת אימייל לניוזלטר">
+            <button type="button" aria-label="הרשמה לניוזלטר">הרשמה</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Manu pop. כל הזכויות שמורות.</p>
+      <div class="footer-legal">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="legal-sep">·</span>
+        <a href="/terms">תנאי שימוש</a>
+        <span class="legal-sep">·</span>
+        <a href="/accessibility">נגישות</a>
+        <span class="legal-sep">·</span>
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution">נוצר באמצעות Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>
